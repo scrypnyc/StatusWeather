@@ -92,8 +92,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
   }
   
   func setLightBackground() {
-    let topColor = UIColor.white.cgColor
-    let bottomColor = UIColor.cyan.cgColor
+    let topColor = UIColor.purple.cgColor
+    let bottomColor = UIColor.purple.cgColor
     gradientLayer.frame = view.bounds
     gradientLayer.colors = [topColor, bottomColor]
     
@@ -101,8 +101,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
   }
 
   func setDarkBackground() {
-    let topColor = UIColor.darkGray.cgColor
-    let bottomColor = UIColor.lightGray.cgColor
+    let topColor = UIColor.black.cgColor
+    let bottomColor = UIColor.purple.cgColor
     gradientLayer.frame = view.bounds
     gradientLayer.colors = [topColor, bottomColor]
     
