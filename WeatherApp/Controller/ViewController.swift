@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
-import NVActivityIndicatorView
 import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
@@ -31,22 +30,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
   let apiKey = "762a34b466f8a3678e4f1717f1d9aaa2"
   var latitude = 2.33
   var longitude = 20.22
-  var activityIndicator: NVActivityIndicatorView!
   let locationManager = CLLocationManager()
   
   override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.layer.addSublayer(gradientLayer)
     
-    let indicatorSize: CGFloat = 70
-    let indicatorFrame = CGRect(x: (view.frame.width-indicatorSize)/2, y: (view.frame.height-indicatorSize)/2, width: indicatorSize, height: indicatorSize)
-    activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .lineScale, color: UIColor.clear, padding: 20.0)
-    view.addSubview(activityIndicator)
+      locationManager.requestWhenInUseAuthorization()
     
-    locationManager.requestWhenInUseAuthorization()
-    
-    activityIndicator.startAnimating()
-    if(CLLocationManager.locationServicesEnabled()) {
+  if(CLLocationManager.locationServicesEnabled()) {
       locationManager.delegate = self
       locationManager.desiredAccuracy = kCLLocationAccuracyBest
       locationManager.startUpdatingLocation()
@@ -62,9 +54,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     latitude = location.coordinate.latitude
     longitude = location.coordinate.longitude
     Alamofire.request("http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric").responseJSON { response in
-      self.activityIndicator.stopAnimating()
       
-      if let responseStr = response.result.value {
+  if let responseStr = response.result.value {
         let jsonResponse = JSON(responseStr)
         let jsonWeather = jsonResponse["weather"].array![0]
         let jsonTemp = jsonResponse["main"]
@@ -81,10 +72,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.dayLabel.text = dateFormatter.string(from: date)
         
         let suffix = iconName.suffix(1)
-        if (suffix == "n") {
-          self.setDarkBackground()
+  if (suffix == "n") {
+        self.setDarkBackground()
         } else {
-          self.setLightBackground()
+        self.setLightBackground()
         }
       }
     }
